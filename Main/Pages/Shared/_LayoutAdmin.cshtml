@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Sample Crud</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="~/css/w3css.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
+</head>
+<body>
+    <div class="w3-top">
+        <div class="w3-bar w3-white w3-wide w3-padding w3-card">
+            <a href="#" class="w3-bar-item w3-button"><b>CRUD</b> Projects</a>
+        </div>
+    </div>
+
+    @RenderBody();
+
+    <h1>&nbsp;</h1>
+    <!-- Footer -->
+    <footer class="w3-center w3-black w3-padding-16">
+        <p>&copy; <b>WebAPIs</b></p>
+    </footer>
+
+</body>
+</html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js" type="text/javascript" charset="utf8"></script>
+@RenderSection("scripts", required: true)

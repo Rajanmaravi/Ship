@@ -1,0 +1,300 @@
+﻿
+@{
+    ViewData["Title"] = "Edit Page - Ship";
+    Layout = "~/Pages/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="w3-content w3-padding" style="max-width:1564px">
+    <div class="w3-container w3-padding-32">
+        <p>&nbsp;</p>
+        <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">
+            @ViewData["Title"] <a href="/Ship" class="w3-button w3-right w3-small w3-border"><b>Index</b></a>
+        </h3>
+        <p>&nbsp;</p>
+        <p><b>Ship Section</b></p>
+        <form id="ShipForm">
+            <div class="w3-row-padding">
+                <div class="form-group w3-col w3-quarter w3-margin-bottom">
+                    <label>Company</label>
+                    <input id="Company" name='company' class="form-control w3-input w3-border w3-small" type="text">
+                </div>
+                <div class="form-group w3-col w3-quarter w3-margin-bottom">
+                    <label>Port</label>
+                    <input id="Port" name='port' class="form-control w3-input w3-border w3-small" type="text">
+                </div>
+                <div class="form-group w3-col w3-quarter w3-margin-bottom">
+                    <label>Destination</label>
+                    <input id="Destination" name='destination' class="form-control w3-input w3-border w3-small" type="text">
+                </div>
+            </div>
+            <div class="w3-row-padding">
+                <div class="form-group w3-col w3-quarter w3-margin-bottom">
+                    <label>Capacity</label>
+                    <input id="Capacity" name='capacity' class="form-control w3-input w3-border w3-small" type="text">
+                </div>
+                <div class="form-group w3-col w3-quarter w3-margin-bottom">
+                    <label>ETD</label>
+                    <input id="Etd" name='etd' class="form-control w3-input w3-border w3-small" type="date">
+                </div>
+                <div class="form-group w3-col w3-quarter w3-margin-bottom">
+                    <label>ETA</label>
+                    <input id="Eta" name='eta' class="form-control w3-input w3-border w3-small" type="date">
+                </div>
+            </div>
+            <div class="form-group">
+                <button type="button" class="w3-button w3-right w3-border" onclick="putShipForm()">Update Ship</button>
+            </div>
+        </form>
+    </div>
+
+    <form id="CargoForm">
+        <div id="CargoAddModal" class="w3-modal">
+            <div class="w3-modal-content w3-animate-top w3-card-4">
+                <header class="w3-container">
+                    <span onclick="document.getElementById('CargoAddModal').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                    <h3>Add Cargo</h3> <p>&nbsp;</p>
+                </header>
+                <div class="w3-container">
+                    <div class="w3-row-padding">
+                        <div class="form-group w3-col w3-half w3-margin-bottom">
+                            <label for="count">Count</label>
+                            <input name='count' class="form-control w3-input w3-border w3-small" type="text">
+                        </div>
+                        <div class="form-group w3-col w3-half w3-margin-bottom">
+                            <label for="type">Type</label>
+                            <input name='type' class="form-control w3-input w3-border w3-small" type="text">
+                        </div>
+                    </div>
+                    <div class="w3-row-padding">
+                        <div class="form-group w3-col w3-half w3-margin-bottom">
+                            <label for="item">Item</label>
+                            <input name='item' class="form-control w3-input w3-border w3-small" type="text">
+                        </div>
+                        <div class="form-group w3-col w3-half w3-margin-bottom">
+                            <label for="shipId">ShipId</label>
+                            <input name='shipId' value="@ViewBag.EditId" class="form-control w3-input w3-border w3-small" type="text" readonly>
+                        </div>
+                    </div>
+                </div>
+                <footer class="w3-container">
+                    <p> <a href="#" onclick="postCargoForm();" class="w3-button w3-round w3-border w3-right w3-padding-small">Save</a> </p>
+                    <h3>&nbsp;</h3>
+                </footer>
+            </div>
+        </div>
+    </form>
+
+    <form id="CargoEditForm">
+        <div id="CargoEditModal" class="w3-modal">
+            <div class="w3-modal-content w3-animate-top w3-card-4">
+                <header class="w3-container">
+                    <span onclick="document.getElementById('CargoEditModal').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                    <h3>Edit Cargo</h3> <p>&nbsp;</p>
+                </header>
+                <div class="w3-container">
+                    <div class="w3-row-padding">
+                        <div class="form-group w3-col w3-half w3-margin-bottom">
+                            <label for="count">Count</label>
+                            <input id='count' name='count' class="form-control w3-input w3-border w3-small" type="text">
+                        </div>
+                        <div class="form-group w3-col w3-half w3-margin-bottom">
+                            <label for="type">Type</label>
+                            <input id='type' name='type' class="form-control w3-input w3-border w3-small" type="text">
+                        </div>
+                    </div>
+                    <div class="w3-row-padding">
+                        <div class="form-group w3-col w3-half w3-margin-bottom">
+                            <label for="item">Item</label>
+                            <input id='item' name='item' class="form-control w3-input w3-border w3-small" type="text">
+                        </div>
+                        <div class="form-group w3-col w3-half w3-margin-bottom">
+                            <label for="id">Id</label>
+                            <input id='id' name='id' class="form-control w3-input w3-border w3-small" type="text" readonly>
+                        </div>
+                    </div>
+                </div>
+                <footer class="w3-container">
+                    <p> <a href="#" onclick="putCargoForm();" class="w3-button w3-round w3-border w3-right w3-padding-small">Update</a> </p>
+                    <h3>&nbsp;</h3>
+                </footer>
+            </div>
+        </div>
+    </form>
+
+    <div class="w3-container w3-padding-32 text-center">
+        <p>
+            <hr/>
+            <b>Cargo Section</b>
+            <button id="BtnAddCargo" onclick="document.getElementById('CargoAddModal').style.display='block'" class="w3-button w3-right w3-border">Add Cargo</button>
+        </p>
+        <table id="CargoEditTable" class="w3-hoverable w3-small w3-centered display" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Count</th>
+                    <th>Type</th>
+                    <th>Item</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#CargoEditTable').DataTable({
+                "searching": false, "paging": false, "info": false,
+                "ajax": {
+                    'url': 'https://localhost:7286/api/ship/' + @ViewBag.EditId + '/cargo/',
+                    "type": "GET",
+                    "datatype": "json",
+                    "dataSrc": function (json) {
+                        FillShipSection(json);
+                        var temp, data = [];
+                        for (var i = 0; i < json.data.cargos.length; i++) {
+                            temp = json.data.cargos[i];
+                            data.push(temp);
+                        }
+                        return data;
+                    }
+                },
+                "columns": [
+                    { "data": "id", "autoWidth": true },
+                    { "data": "count", "autoWidth": true },
+                    { "data": "type", "autoWidth": true },
+                    {"data": "item", "autoWidth": true },
+                    {
+                        "data": "id", "autoWidth": true, "render": function (data) {
+                            return '<a href="#" onclick="FetchCargoRecord(' + data + ');" class="w3-button w3-round w3-border w3-light-gray w3-padding-small"' + data + '"><b>Edit</b></a> &nbsp;' +
+                                '<a href="#" onclick="DeleteCargoRecord(' + data + ');" class="w3-button w3-round w3-border w3-red w3-padding-small"' + data + '"><b>Delete</b></a>';
+                        }
+                    }
+                ]
+            });
+        });
+
+        function FillShipSection(jsondata) {
+            $("#Company").val(jsondata.data.company);
+            $("#Port").val(jsondata.data.port);
+            $("#Destination").val(jsondata.data.destination);
+            $("#Capacity").val(jsondata.data.capacity);
+            $("#Etd").val(jsondata.data.etd.slice(0, 10));
+            $("#Eta").val(jsondata.data.eta.slice(0, 10));
+        }
+
+        function putShipForm() {
+            debugger;
+            var data = $("#ShipForm").serializeArray();
+            var jsonData = {};
+            $.each(data, function () {
+                jsonData[this.name] = this.value || "";
+            });
+            var putData = {};
+            putData = JSON.stringify(jsonData);
+            $.ajax({
+                url: 'https://localhost:7286/api/ship/' + @ViewBag.EditId,
+                type: 'PUT',
+                contentType: 'application/json; charset=UTF-8',
+                data: putData,
+                success: function (data) {
+                    alert('Successful (Update)');
+                    location.reload();
+                },
+                error: function (jqXhr, textStatus, errorMessage) {
+                    alert('Error');
+                }
+            });
+        }
+
+        function postCargoForm() {
+            var data = $("#CargoForm").serializeArray();
+            var jsonData = {};
+            $.each(data, function () {
+                jsonData[this.name] = this.value || "";
+            });
+            var postData = {};
+            postData = JSON.stringify(jsonData);
+            console.log(jsonData);
+            $.ajax({
+                url: 'https://localhost:7286/api/cargo',
+                type: 'POST',
+                contentType: 'application/json; charset=UTF-8',
+                data: postData,
+                success: function (data) {
+                    alert('Successful (Add)');
+                    location.reload();
+                },
+                error: function (jqXhr, textStatus, errorMessage) {
+                    alert(textStatus + ' ' + errorMessage);
+                }
+            });
+        }
+
+        function putCargoForm() {
+            debugger;
+            var data = $("#CargoEditForm").serializeArray();
+            var jsonData = {};
+            $.each(data, function () {
+                jsonData[this.name] = this.value || "";
+            });
+            var putData = {};
+            putData = JSON.stringify(jsonData);
+            $.ajax({
+                url: 'https://localhost:7286/api/cargo/' + jsonData.id,
+                type: 'PUT',
+                contentType: 'application/json; charset=UTF-8',
+                data: putData,
+                success: function (data) {
+                    alert('Successful (Update)');
+                    location.reload();
+                },
+                error: function (jqXhr, textStatus, errorMessage) {
+                    alert(textStatus + ' ' + errorMessage);
+                }
+            });
+        }
+
+        function DeleteCargoRecord(id) {
+            $.ajax({
+                url: 'https://localhost:7286/api/cargo/' + id,
+                type: 'DELETE',
+                success: function (data) {
+                    alert("Successful (Delete)");
+                    location.reload();
+                },
+                error: function (jqXhr, textStatus, errorMessage) {
+                    alert(textStatus);
+                }
+            });
+        }
+
+        function FetchCargoRecord(id) {
+            $.ajax({
+                url: 'https://localhost:7286/api/cargo/' + id,
+                type: 'GET',
+                success: function (data) {
+                    document.getElementById('CargoEditModal').style.display = 'block';
+                    FillCargoEditModal(data);
+                },
+                error: function (jqXhr, textStatus, errorMessage) {
+                    alert(textStatus);
+                }
+            });
+        }
+
+        function FillCargoEditModal(jsondata) {
+            $("#count").val(jsondata.count);
+            $("#type").val(jsondata.type);
+            $("#item").val(jsondata.item);
+            $("#id").val(jsondata.id);
+        }
+
+        function showInfo() {
+            alert('Hello');
+        }
+    </script>
+}

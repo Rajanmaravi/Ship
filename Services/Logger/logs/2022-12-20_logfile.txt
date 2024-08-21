@@ -1,0 +1,1 @@
+2022-12-20 15:31:06.0389 ERROR Cannot delete ship with id: 7 due to attached cargos.

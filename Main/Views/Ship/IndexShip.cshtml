@@ -1,0 +1,87 @@
+﻿
+@{
+    ViewData["Title"] = "Index Page - Ship";
+    Layout = "~/Pages/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="w3-content w3-padding" style="max-width:1564px">
+    <div class="w3-content w3-padding" style="max-width:1564px">
+        <div class="w3-container w3-padding-32">
+            <p>&nbsp;</p>
+            <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">
+                @ViewData["Title"] <a href="/Ship/Add" class="w3-button w3-right w3-small w3-border"><b>Add</b></a>
+            </h3>
+            <p>&nbsp;</p>
+        </div>
+        <div class="text-center">
+            <table id="ShipListTable" class="w3-hoverable w3-small w3-centered display" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Company</th>
+                        <th>Port</th>
+                        <th>Destination</th>
+                        <th>Capacity</th>
+                        <th>ETD</th>
+                        <th>ETA</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#ShipListTable').DataTable({
+                "ajax": {
+                    'url': 'https://localhost:7286/api/ship/', /*'@Url.Action("getAll", "Home")',*/
+                    "type": "GET",
+                    "datatype": "json"
+                },
+                "columns": [
+                    { "data": "id", "autoWidth": true },
+                    { "data": "company", "autoWidth": true },
+                    { "data": "port", "autoWidth": true },
+                    { "data": "destination", "autoWidth": true },
+                    { "data": "capacity", "autoWidth": true },
+                    {
+                        "data": "etd", "autoWidth": true, "render": function (data) {
+                            return data.substr(0, 10);
+                        }
+                    },
+                    {
+                        "data": "eta", "autoWidth": true, "render": function (data) {
+                            return data.substr(0, 10);
+                        }
+                    },
+                    {
+                        "data": "id", "autoWidth": true, "render": function (data) {
+                            return '<a href="/Ship/Detail/'+ data +'" class="w3-button w3-round w3-padding-small w3-light-gray"> <b>Detail</b></a> &nbsp;' + 
+                            '<a href="/Ship/Edit/'+ data +'" class="w3-button w3-round w3-padding-small w3-light-gray"> <b>Edit</b></a> &nbsp; ' +
+                            '<a href="#" onclick="DeleteRecord('+ data +');" class="w3-button w3-padding-small w3-round w3-red"'+ data +'"><b>Delete</b></a>';
+                        }
+                    }
+                ]
+            });
+        });
+
+        function DeleteRecord(id) {
+            $.ajax({
+                url: 'https://localhost:7286/api/ship/' + id,
+                type: 'DELETE',
+                success: function (data) {
+                    alert("Successful (Delete)");
+                    location.reload();
+                },
+                error: function (jqXhr, textStatus, errorMessage) {
+                    alert('Error - Cargo list must be removed first');
+                }
+            });
+        }
+    </script>
+}

@@ -1,0 +1,97 @@
+﻿
+@{
+    ViewData["Title"] = "Detail Page - Ship";
+    Layout = "~/Pages/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="w3-content w3-padding" style="max-width:1564px">
+    <div class="w3-container w3-padding-32">
+        <p>&nbsp;</p>
+        <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">
+            @ViewData["Title"] <a href="/Ship" class="w3-button w3-right w3-small w3-border"><b>Index</b></a>
+        </h3>
+        <p>&nbsp;</p>
+        <p><b>Ship Section</b></p>
+        <div class="w3-row-padding">
+            <div class="w3-col w3-quarter w3-margin-bottom">
+                <label>Company</label>
+                <input id="Company" class="w3-input w3-border w3-small" type="text" disabled>
+            </div>
+            <div class="w3-col w3-quarter w3-margin-bottom">
+                <label>Port</label>
+                <input id="Port" class="w3-input w3-border w3-small" type="text" disabled>
+            </div>
+            <div class="w3-col w3-quarter w3-margin-bottom">
+                <label>Destination</label>
+                <input id="Destination" class="w3-input w3-border w3-small" type="text" disabled>
+            </div>
+        </div>
+        <div class="w3-row-padding">
+            <div class="w3-col w3-quarter w3-margin-bottom">
+                <label>Capacity</label>
+                <input id="Capacity" class="w3-input w3-border w3-small" type="text" disabled>
+            </div>
+            <div class="w3-col w3-quarter w3-margin-bottom">
+                <label>ETD</label>
+                <input id="Etd" class="w3-input w3-border w3-small" type="text" disabled>
+            </div>
+            <div class="w3-col w3-quarter w3-margin-bottom">
+                <label>ETA</label>
+                <input id="Eta" class="w3-input w3-border w3-small" type="text" disabled>
+            </div>
+        </div>
+    </div>
+    <div class="w3-container w3-padding-32 text-center">
+        <p><b>Cargo Section</b></p>
+        <table id="CargoDetailTable" class="w3-hoverable w3-small w3-centered display" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Count</th>
+                    <th>Type</th>
+                    <th>Item</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#CargoDetailTable').DataTable({
+                "ajax": {
+                    'url': 'https://localhost:7286/api/ship/' + @ViewBag.DetailId + '/cargo/',
+                    "type": "GET",
+                    "datatype": "json",
+                    "dataSrc": function (json) {
+                        fillShipSection(json);
+                        var temp, data = [];
+                        for (var i = 0; i < json.data.cargos.length; i++) {
+                            temp = json.data.cargos[i];
+                            data.push(temp);
+                        }
+                        return data;
+                    }
+                },
+                "columns": [
+                    { "data": "id", "autoWidth": true },
+                    { "data": "count", "autoWidth": true },
+                    { "data": "type", "autoWidth": true },
+                    { "data": "item", "autoWidth": true }
+                ]
+            });
+        });
+
+        function fillShipSection(jsondata) {
+            $("#Company").val(jsondata.data.company);
+            $("#Port").val(jsondata.data.port);
+            $("#Destination").val(jsondata.data.destination);
+            $("#Capacity").val(jsondata.data.capacity);
+            $("#Etd").val(jsondata.data.etd.slice(0, 10));
+            $("#Eta").val(jsondata.data.eta.slice(0, 10));
+        }
+    </script>
+}

@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Sample Crud</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
+</head>
+<body>
+    <div class="w3-top">
+        <div class="w3-bar w3-white w3-wide w3-padding w3-card">
+            <a href="#" class="w3-bar-item w3-button"><b>CRUD</b> Projects</a>
+        </div>
+    </div>
+    <div class="w3-content w3-padding" style="max-width:1564px">
+        <div class="w3-container w3-padding-32">
+            <p>&nbsp;</p>
+            <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">Ship Index</h3>
+            <p>&nbsp;</p>
+        </div>
+
+        <div class="text-center">
+            <table id="ShipListTable" class="w3-hoverable w3-small w3-centered display" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Company</th>
+                        <th>Port</th>
+                        <th>Destination</th>
+                        <th>Capacity</th>
+                        <th>ETD</th>
+                        <th>ETA</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+            
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <h1>&nbsp;</h1>
+    <!-- Footer -->
+    <footer class="w3-center w3-black w3-padding-16">
+        <p>&copy; <b>WebAPIs</b></p>
+    </footer>
+
+</body>
+</html>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#ShipListTable').DataTable({
+            "ajax": {
+                'url': 'https://localhost:7286/api/ship/', /*'@Url.Action("getAll", "Home")',*/
+                "type": "GET",
+                "datatype": "json"
+            },
+            "columns": [
+                { "data": "id", "autoWidth": true },
+                { "data": "company", "autoWidth": true },
+                { "data": "port", "autoWidth": true },
+                { "data": "destination", "autoWidth": true },
+                { "data": "capacity", "autoWidth": true },
+                { "data": "etd", "autoWidth": true },
+                { "data": "eta", "autoWidth": true },
+                {
+                    "data": "id", "autoWidth": true, "render": function (data) {
+                        return '<span onclick="DeleteRecord(' + data + ');" class="w3-tag w3-round w3-blue"' + data + '"><b>Edit</b></span> |' +
+                        '<span onclick="DeleteRecord(' + data + ');" class="w3-tag w3-round w3-red"' + data + '"><b>Delete</b></span>';
+                    }
+                }
+            ]
+            //"columns": [
+            //    { "sTitle": "Id", "data": "id" },
+            //    { "sTitle": "Company", "data": "company" },
+            //    { "sTitle": "Port", "data": "port" },
+            //    { "sTitle": "Destination", "data": "destination" },
+            //    { "sTitle": "Capacity", "data": "capacity" },
+            //    { "sTitle": "ETD", "data": "etd" },
+            //    { "sTitle": "ETA", "data": "eta" },
+            //    {
+            //        "sTitle": "Actions", "render": function (data, row) { return "<a href='#' class='btn btn-danger' onclick=DeleteCustomer('" + row.id + "');>Delete</a>"; }
+            //    }
+            //]
+        });
+
+        function DeleteRecord(id) {
+            alert(id);
+        }
+    });
+</script>

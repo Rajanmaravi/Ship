@@ -1,0 +1,75 @@
+﻿
+@{
+    ViewData["Title"] = "Add Page - Ship";
+    Layout = "~/Pages/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="w3-content w3-padding" style="max-width:1564px">
+    <div class="w3-container w3-padding-32">
+        <p>&nbsp;</p>
+        <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">
+            @ViewData["Title"] <a href="/Ship" class="w3-button w3-right w3-small w3-border"><b>Index</b></a>
+        </h3>
+        <p>&nbsp;</p>
+        <p><b>Ship Section</b></p>
+        <form id="ShipForm">
+			<div class="w3-row-padding">
+				<div class="form-group w3-col w3-quarter w3-margin-bottom">
+					<label for="company">Company</label>
+					<input name='company' class="form-control w3-input w3-border w3-small" type="text">
+				</div>
+				<div class="form-group w3-col w3-quarter w3-margin-bottom">
+					<label for="port">Port</label>
+					<input name='port' class="form-control w3-input w3-border w3-small" type="text">
+				</div>
+				<div class="form-group w3-col w3-quarter w3-margin-bottom">
+					<label for="destination">Destination</label>
+					<input name='destination' class="form-control w3-input w3-border w3-small" type="text">
+				</div>
+			</div>
+			<div class="w3-row-padding w3-grayscale">
+				<div class="form-group w3-col w3-quarter w3-margin-bottom">
+					<label for="capacity">Capacity</label>
+					<input name='capacity' class="form-control w3-input w3-border w3-small" type="text">
+				</div>
+				<div class="form-group w3-col w3-quarter w3-margin-bottom">
+					<label for="etd">ETD</label>
+					<input name='etd' class="form-control w3-input w3-border w3-small" type="date">
+				</div>
+				<div class="form-group w3-col w3-quarter w3-margin-bottom">
+					<label for="eta">ETA</label>
+					<input name='eta' class="form-control w3-input w3-border w3-small" type="date">
+				</div>
+			</div>
+			<div class="w3-row-padding form-group">
+				<button type="button" class="w3-button w3-right w3-border" onclick="postShipForm()">Save</button>
+			</div>
+		</form>
+    </div>
+</div>
+
+@section Scripts {
+	<script type="text/javascript">
+		function postShipForm() {
+			var data = $("#ShipForm").serializeArray();
+			var jsonData = {};
+			$.each(data, function () {
+				jsonData[this.name] = this.value || "";
+			});
+			var postData = {};
+			postData = JSON.stringify(jsonData);
+			$.ajax({
+				url: 'https://localhost:7286/api/ship',
+				type: 'POST',
+				contentType: 'application/json; charset=UTF-8',
+				data: postData,
+				success: function(data) {
+					alert('Successful (Add)');
+				},
+				error : function (jqXhr, textStatus, errorMessage ) {
+					alert(textStatus);
+				}																							
+			});
+		}
+	</script>
+}
